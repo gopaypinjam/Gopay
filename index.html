@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulasi Call Center GoPay</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="w-[360px] bg-white rounded-2xl shadow-xl p-5 text-center">
+    <h1 class="text-xl font-bold mb-4">📞 Layanan GoPay</h1>
+
+    <button onclick="startCall()" class="bg-green-500 text-white px-4 py-3 rounded-xl w-full mb-3 animate-pulse">
+      📲 Hubungi Layanan
+    </button>
+
+    <!-- Fake WhatsApp Call Screen -->
+    <div id="callScreen" class="hidden mt-4 bg-green-600 text-white rounded-2xl p-6">
+      <p class="text-sm opacity-80">Panggilan WhatsApp</p>
+      <h2 class="text-lg font-semibold mt-2">LAYANAN GOPAY PUSAT</h2>
+
+      <div class="mt-6">
+        <p id="status" class="animate-pulse text-lg">Menghubungkan...</p>
+      </div>
+
+      <div class="mt-8 flex justify-center gap-6">
+        <button onclick="playVoice()" class="bg-white text-green-600 px-4 py-2 rounded-full">📞</button>
+        <button onclick="endCall()" class="bg-red-500 px-4 py-2 rounded-full">❌</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let speech;
+
+    function startCall() {
+      document.getElementById('callScreen').classList.remove('hidden');
+      playVoice(); // otomatis mulai suara saat dibuka
+    }
+
+    function playVoice() {
+      const text = "Selamat datang di layanan pusat GoPay Pinjam. Untuk proses pencairan dana Anda, demi keamanan kami akan menghubungkan ke petugas pusat GoPay. Mohon ditunggu.";
+      speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'id-ID';
+      speech.rate = 1.05;
+      speech.pitch = 1.1;
+      speech.onend = function() {
+        window.location.href = "https://wa.me/6289697420620";
+      };
+      window.speechSynthesis.speak(speech);
+    }
+
+    function endCall() {
+      window.speechSynthesis.cancel();
+      document.getElementById('callScreen').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
